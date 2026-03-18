@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Iosevka";
+  src: url("/fonts/Iosevka-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Iosevka";
+  src: url("/fonts/Iosevka-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Iosevka";
+  src: url("/fonts/Iosevka-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: "Iosevka", monospace;
+  }
+  /* ☀️ LIGHT THEME (Default) */
+  :root {
+    --color-bg-main: #f8fafc;
+    --color-bg-muted: #64748b;
+    --color-bg-surface: #ece9ff;
+    --color-bg-primary: #ffa600;
+
+    --color-text-main: #0f172a;
+    --color-text-muted: #64748b;
+    --color-primary: #ad7100;
+    --color-secondary: #d97706;
+
+    --border-primary: #ffa600;
+
+    --gradient-start: #f8fafc;
+    --gradient-end: #d3cef7;
+  }
+
+  /* 🌙 DARK THEME (Blue-Purple Mystic Vibe) */
+  .dark {
+    --color-bg-main: #12111d;
+    --color-bg-surface: #242040;
+    --color-bg-muted: #222238;
+    --color-bg-primary: #ffa600;
+
+    --color-text-main: #f8fafc;
+    --color-text-muted: #64748b;
+    --color-primary: #ffa600;
+    --color-secondary: #fbbf24;
+
+    --border-primary: #ffa600;
+
+    --gradient-start: #12111d;
+    --gradient-end: #26166156;
+  }
+}
+
+@layer utilities {
+  .bg-theme-gradient {
+    background: linear-gradient(
+      0deg,
+      var(--gradient-start) 0%,
+      var(--gradient-end) 100%
+    );
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-fadeOut {
+  animation: fadeOut 0.5s ease 2.5s forwards; /* Fades out right before the shuffle ends */
+}
