@@ -23,6 +23,7 @@ export default {
       },
       borderColor: {
         primary: "var(--border-primary)",
+        muted: "var(--border-muted)",
       },
 
       animation: {

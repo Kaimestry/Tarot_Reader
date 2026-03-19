@@ -4,6 +4,7 @@ import ThemeToggle from "../../components/buttons/ThemeToggle/ThemeToggle";
 
 const NAV_LINKS = [
   { label: "Home", path: "/" },
+  { label: "Reading", path: "/reading" },
   { label: "Library", path: "/library" },
 ];
 
