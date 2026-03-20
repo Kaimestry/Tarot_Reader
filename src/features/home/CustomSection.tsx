@@ -31,9 +31,13 @@ const CustomSection = () => {
             />
           </div>
 
+          {/* PLACE HOLDER */}
           <div className="w-full flex justify-center">
-            <div className="w-full max-w-[300px] md:max-w-2xl aspect-[5/3] bg-primary rounded-2xl shadow-xl flex items-center justify-center text-xs md:text-sm">
-              Card Customization Preview
+            <div className="w-full max-w-[300px] md:max-w-2xl aspect-[5/3] bg-indigo-500/10 border-2 border-dashed border-indigo-500/40 rounded-2xl shadow-xl flex flex-col items-center justify-center gap-3">
+              <MdDraw className="text-3xl md:text-5xl text-indigo-500/30" />
+              <span className="text-xs md:text-sm font-medium text-indigo-500/60 uppercase tracking-widest">
+                Card Customization Preview
+              </span>
             </div>
           </div>
         </div>

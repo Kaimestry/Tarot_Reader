@@ -37,7 +37,7 @@
 
     --color-text-main: #0f172a;
     --color-text-muted: #64748b;
-    --color-primary: #ad7100;
+    --color-primary: #ffa600;
     --color-secondary: #05177f;
 
     --border-primary: #ffa600;
@@ -49,7 +49,7 @@
 
   /* 🌙 DARK THEME (Blue-Purple Mystic Vibe) */
   .dark {
-    --color-bg-main: #12111d;
+    --color-bg-main: #242140;
     --color-bg-surface: #242040;
     --color-bg-muted: #222238;
     --color-bg-primary: #ffa600;
@@ -62,8 +62,8 @@
     --border-primary: #ffa600;
     --border-muted: #64748b;
 
-    --gradient-start: #12111d;
-    --gradient-end: #26166156;
+    --gradient-start: #242140;
+    --gradient-end: #12111d;
   }
 }
 

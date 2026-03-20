@@ -33,7 +33,7 @@ const HeroSection = () => {
         {/* TEXT */}
         <div className="relative z-20 flex flex-col gap-6 md:gap-10">
           <div className="font-bold text-primary text-3xl sm:text-4xl md:text-5xl uppercase">
-            {BRAND_CONFIG.brandName}
+            {BRAND_CONFIG.shortBrandName}
           </div>
 
           <div className="text-main flex flex-col gap-5 font-semibold max-w-[500px]">
