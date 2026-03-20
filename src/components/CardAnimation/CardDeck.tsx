@@ -84,8 +84,8 @@ const CardDeck: React.FC<CardDeckProps> = ({ cardCount = 5 }) => {
           borderRadius: CardDeckConfig.borderRadius,
           transform:
             isHovered || isClicked
-              ? `translateY(-${floatPx}px)`
-              : "translateY(0)",
+              ? `translateX(${floatPx}px) translateY(${floatPx}px)`
+              : "translateX(0) translateY(0)",
         }}
       />
     </div>

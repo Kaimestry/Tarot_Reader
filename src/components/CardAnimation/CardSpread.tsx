@@ -5,14 +5,15 @@ import { CardDeckConfig } from "../../config/CardDeckConfig";
 // --- ANIMATION CONFIGURATION ---
 const SpreadConfig = {
   staggerDelay: 150, // ms between each card leaving the deck
-  discardStagger: 50, // ms between each card returning to the deck
-  travelDuration: 800, // ms for long flight (deck <-> table)
+  discardStagger: 80, // Slower gathering (increased from 50)
+  travelDuration: 800, // ms for spread flight
+  returnDuration: 1200, // Slower, heavier return (new)
   selectDuration: 200, // ms for quick selection "pop"
   entranceDelay: 300, // ms to wait at the deck before spreading
   selectedPopY: -20, // px for selection float
   selectedScale: 1.05, // scale for selection
   mobileScale: 0.18, // scale for mobile
-  desktopScale: 0.25, // scale for desktop
+  desktopScale: 0.35, // scale for desktop
 };
 
 interface CardSpreadProps {
@@ -42,7 +43,6 @@ const CardSpread: React.FC<CardSpreadProps> = ({
     typeof window !== "undefined" ? window.innerWidth < 640 : false,
   );
 
-  // 1. Initial State: If forced (Phase 4), start on table. Otherwise, start hidden.
   const [animationStage, setAnimationStage] = useState<
     "calculating" | "atDeck" | "spreading"
   >(forceSpread ? "spreading" : "calculating");
@@ -57,6 +57,7 @@ const CardSpread: React.FC<CardSpreadProps> = ({
     ? deckWidth / CardDeckConfig.originalWidth
     : targetScale;
 
+  // Sync offsets when deck position is known
   useEffect(() => {
     if (deckX && deckY) {
       const newOffsets = deck.slice(0, 12).map((_, i) => {
@@ -78,6 +79,7 @@ const CardSpread: React.FC<CardSpreadProps> = ({
     }
   }, [deckX, deckY, deck, forceSpread, animationStage]);
 
+  // Handle spreading trigger
   useEffect(() => {
     if (animationStage === "atDeck" && !forceSpread) {
       const timer = setTimeout(() => {
@@ -87,18 +89,18 @@ const CardSpread: React.FC<CardSpreadProps> = ({
     }
   }, [animationStage, forceSpread]);
 
+  // Handle dismissal cleanup
   useEffect(() => {
     if (isDismissing) {
+      // Logic: Max visible cards (12) * stagger + travel time + buffer
       const totalWait =
-        deck.length * SpreadConfig.discardStagger +
-        SpreadConfig.travelDuration +
-        100;
+        12 * SpreadConfig.discardStagger + SpreadConfig.returnDuration + 200;
       const timer = setTimeout(() => {
         if (onDismissComplete) onDismissComplete();
       }, totalWait);
       return () => clearTimeout(timer);
     }
-  }, [isDismissing, onDismissComplete, deck.length]);
+  }, [isDismissing, onDismissComplete]);
 
   const cardWidth = CardDeckConfig.originalWidth * targetScale;
   const cardHeight = CardDeckConfig.originalHeight * targetScale;
@@ -114,6 +116,23 @@ const CardSpread: React.FC<CardSpreadProps> = ({
         const isInitialSpread =
           isSpreadingStage && !isDismissing && !forceSpread;
         const isReturning = isDismissing && !isSelected;
+
+        // Dynamic transition timing
+        const currentDuration = isReturning
+          ? SpreadConfig.returnDuration
+          : isInitialSpread
+            ? SpreadConfig.travelDuration
+            : SpreadConfig.selectDuration;
+
+        const currentEasing = isReturning
+          ? "ease-in-out" // Smoother deceleration for returning
+          : "cubic-bezier(0.2, 1, 0.3, 1)"; // Snappy for spreading/selecting
+
+        const currentDelay = isReturning
+          ? `${index * SpreadConfig.discardStagger}ms` // Sequential return
+          : isInitialSpread
+            ? `${index * SpreadConfig.staggerDelay}ms`
+            : "0ms";
 
         return (
           <div
@@ -137,16 +156,12 @@ const CardSpread: React.FC<CardSpreadProps> = ({
                 height: "100%",
 
                 // --- TRANSITION ---
+                // Removed opacity from the transition list to keep it solid during return
                 transition: isSpreadingStage
-                  ? `transform ${isReturning || isInitialSpread ? SpreadConfig.travelDuration : SpreadConfig.selectDuration}ms cubic-bezier(0.2, 1, 0.3, 1), opacity 500ms ease-out`
+                  ? `transform ${currentDuration}ms ${currentEasing}`
                   : "none",
 
-                // --- DELAY ---
-                transitionDelay: isReturning
-                  ? `${(deck.length - index) * SpreadConfig.discardStagger}ms`
-                  : isInitialSpread
-                    ? `${index * SpreadConfig.staggerDelay}ms`
-                    : "0ms",
+                transitionDelay: currentDelay,
 
                 // --- POSITION ---
                 transform:
@@ -156,8 +171,9 @@ const CardSpread: React.FC<CardSpreadProps> = ({
                       ? `translateY(${SpreadConfig.selectedPopY}px) scale(${SpreadConfig.selectedScale})`
                       : "translate(0, 0) scale(1)",
 
-                opacity:
-                  animationStage === "calculating" ? 0 : isReturning ? 0 : 1,
+                // Keep opacity at 1 unless we are in the very first 'calculating' frame
+                opacity: animationStage === "calculating" ? 0 : 1,
+
                 transformOrigin: "top left",
                 cursor:
                   isSpreadingStage && !isDismissing ? "pointer" : "default",

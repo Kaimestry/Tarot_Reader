@@ -8,8 +8,6 @@ interface FlippableCardProps {
   scale?: number;
 }
 
-// components/CardAnimation/FlippableCard.tsx
-
 const FlippableCard: React.FC<FlippableCardProps> = ({
   card,
   isRevealed,
