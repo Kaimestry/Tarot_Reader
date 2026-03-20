@@ -8,6 +8,8 @@ interface FlippableCardProps {
   scale?: number;
 }
 
+// components/CardAnimation/FlippableCard.tsx
+
 const FlippableCard: React.FC<FlippableCardProps> = ({
   card,
   isRevealed,
@@ -17,52 +19,41 @@ const FlippableCard: React.FC<FlippableCardProps> = ({
   const height = CardDeckConfig.originalHeight * scale;
 
   return (
-    <div
-      className="relative"
-      style={{
-        width,
-        height,
-        perspective: "1000px",
-      }}
-    >
+    <div className="relative" style={{ width, height, perspective: "1000px" }}>
       <div
-        className={`relative w-full h-full transition-transform duration-700 ease-in-out`}
-        style={{
-          transformStyle: "preserve-3d",
-          transform: isRevealed ? "rotateY(180deg)" : "rotateY(0deg)",
-        }}
+        className="relative w-full h-full transition-transform duration-700 preserve-3d"
+        style={{ transform: isRevealed ? "rotateY(180deg)" : "rotateY(0deg)" }}
       >
-        {/* CARD BACK */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{ backfaceVisibility: "hidden", zIndex: 2 }}
-        >
+        {/* BACK */}
+        <div className="absolute inset-0 backface-hidden z-10">
           <img
             src="/assets/Cards-png/CardBacks.png"
-            className="w-full h-full rounded-md shadow-xl border border-primary/20"
-            alt="Card Back"
+            className="w-full h-full rounded-md shadow-xl"
+            alt="Back"
           />
         </div>
 
-        {/* CARD FRONT */}
+        {/* FRONT */}
         <div
-          className="absolute inset-0 w-full h-full bg-white rounded-md shadow-2xl flex flex-col items-center justify-center border-2 border-primary"
-          style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
-            zIndex: 1,
-          }}
+          className="absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-md shadow-2xl overflow-hidden"
+          style={{ transform: "rotateY(180deg)" }}
         >
-          {/* Card Image or Content */}
-          <div className="p-4 text-center">
-            <h3 className="text-black font-bold text-sm sm:text-lg">
-              {card.name}
-            </h3>
-            <div className="w-full h-[1px] bg-primary/20 my-2" />
-            <p className="text-[10px] sm:text-xs text-muted">
-              Arcana Key {card.id}
-            </p>
-          </div>
+          <img
+            src={card.image}
+            alt={card.name}
+            className="w-full h-full object-cover transition-transform duration-500"
+            // Apply the upside-down rotation here
+            style={{
+              transform: card.isReversed ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          />
+
+          {/* Optional Label for Reversed cards */}
+          {card.isReversed && (
+            <div className="absolute bottom-2 left-0 w-full text-center bg-black/60 text-white text-[10px] py-1">
+              REVERSED
+            </div>
+          )}
         </div>
       </div>
     </div>

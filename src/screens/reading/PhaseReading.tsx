@@ -24,7 +24,6 @@ const PhaseReading: React.FC<PhaseReadingProps> = ({
     typeof window !== "undefined" ? window.innerWidth < 640 : false,
   );
 
-  // FEATURE 1 & 3: Staggered Reveal All
   const revealAll = () => {
     selectedCards.forEach((card, index) => {
       setTimeout(() => {

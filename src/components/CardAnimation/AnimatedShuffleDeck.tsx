@@ -7,7 +7,7 @@ interface Props {
   startWidth: number;
   onComplete: () => void;
   shuffleTimes?: number;
-  speed?: number; // NEW: Duration of one shuffle cycle in ms
+  speed?: number;
 }
 
 const AnimatedShuffleDeck: React.FC<Props> = ({
@@ -21,7 +21,7 @@ const AnimatedShuffleDeck: React.FC<Props> = ({
   const [status, setStatus] = useState<"in" | "shuffling" | "out">("in");
   const [count, setCount] = useState(0);
 
-  // Travel speed (entering/exiting the screen) is usually 70-80% of shuffle speed for feel
+  // Travel speed (entering/exiting the screen)
   const travelSpeed = speed * 0.8;
 
   const initialScale = startWidth / CardDeckConfig.originalWidth;

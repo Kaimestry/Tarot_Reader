@@ -11,7 +11,6 @@ const CardDeck: React.FC<CardDeckProps> = ({ cardCount = 5 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
-  // Update container width dynamically
   useEffect(() => {
     const updateWidth = () => {
       if (containerRef.current)
@@ -34,7 +33,6 @@ const CardDeck: React.FC<CardDeckProps> = ({ cardCount = 5 }) => {
     setTimeout(() => setIsClicked(false), 800);
   };
 
-  // offset for the black fake stack at the bottom
   const stackOffset = 6 * scale; // small px offset for visibility
 
   return (

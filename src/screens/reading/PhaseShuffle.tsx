@@ -7,7 +7,7 @@ import PlainButton from "../../components/buttons/PlainButton";
 // --- SHUFFLE CONFIGURATION ---
 const ShuffleConfig = {
   iterations: 5, // How many times the cards physically swap/move
-  speed: 400, // Duration (ms) of each shuffle movement
+  speed: 700, // Duration (ms) of each shuffle movement
   deckYOffset: -9, // Fine-tune the vertical alignment of the animated deck
 };
 
@@ -98,7 +98,6 @@ const PhaseShuffle: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           startY={deckRect.y + ShuffleConfig.deckYOffset}
           startWidth={deckRect.width}
           shuffleTimes={ShuffleConfig.iterations}
-          // Assuming your AnimatedShuffleDeck accepts a speed/duration prop:
           speed={ShuffleConfig.speed}
           onComplete={handleShuffleComplete}
         />

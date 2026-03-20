@@ -10,7 +10,6 @@ interface PhaseSpreadProps {
   selectedCards: Card[];
   setSelectedCards: (cards: Card[]) => void;
   onNext: () => void;
-  // NEW: Dynamic selection limit based on reading type
   maxSelection: number;
 }
 

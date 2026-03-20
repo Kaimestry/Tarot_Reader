@@ -41,10 +41,10 @@ function NavBar() {
   return (
     <nav
       className={`
-        sticky top-0 z-50
-        bg-main transition-all duration-300
-        ${scrolled ? "border-b border-divider shadow-sm" : "border-b border-transparent"}
-      `}
+    sticky top-0 z-[1000]  
+    bg-main transition-all duration-300
+    ${scrolled ? "border-b border-divider shadow-sm" : "border-b border-transparent"}
+  `}
     >
       <div className="flex items-center justify-between px-4 md:px-8 py-4">
         {/* Logo */}

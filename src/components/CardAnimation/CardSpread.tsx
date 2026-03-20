@@ -12,7 +12,7 @@ const SpreadConfig = {
   selectedPopY: -20, // px for selection float
   selectedScale: 1.05, // scale for selection
   mobileScale: 0.18, // scale for mobile
-  desktopScale: 0.35, // scale for desktop
+  desktopScale: 0.25, // scale for desktop
 };
 
 interface CardSpreadProps {
@@ -57,7 +57,6 @@ const CardSpread: React.FC<CardSpreadProps> = ({
     ? deckWidth / CardDeckConfig.originalWidth
     : targetScale;
 
-  // Step 1: Calculate coordinates
   useEffect(() => {
     if (deckX && deckY) {
       const newOffsets = deck.slice(0, 12).map((_, i) => {
@@ -79,7 +78,6 @@ const CardSpread: React.FC<CardSpreadProps> = ({
     }
   }, [deckX, deckY, deck, forceSpread, animationStage]);
 
-  // Step 2: Trigger Spread timing
   useEffect(() => {
     if (animationStage === "atDeck" && !forceSpread) {
       const timer = setTimeout(() => {
@@ -89,7 +87,6 @@ const CardSpread: React.FC<CardSpreadProps> = ({
     }
   }, [animationStage, forceSpread]);
 
-  // Step 3: Handle Completion of Dismissal
   useEffect(() => {
     if (isDismissing) {
       const totalWait =
@@ -113,7 +110,6 @@ const CardSpread: React.FC<CardSpreadProps> = ({
         const isSelected = !!selectedCards.find((c) => c.id === card.id);
         const offset = offsets[index] || { x: 0, y: 0 };
 
-        // Logical Flags
         const isSpreadingStage = animationStage === "spreading";
         const isInitialSpread =
           isSpreadingStage && !isDismissing && !forceSpread;
@@ -141,16 +137,11 @@ const CardSpread: React.FC<CardSpreadProps> = ({
                 height: "100%",
 
                 // --- TRANSITION ---
-                // We use long travelDuration for the first spread and for the return home.
-                // We use snappy selectDuration for clicking/selecting cards on the table.
                 transition: isSpreadingStage
                   ? `transform ${isReturning || isInitialSpread ? SpreadConfig.travelDuration : SpreadConfig.selectDuration}ms cubic-bezier(0.2, 1, 0.3, 1), opacity 500ms ease-out`
                   : "none",
 
                 // --- DELAY ---
-                // 1. If returning: Stagger based on card index (reverse order).
-                // 2. If initial flight: Stagger based on card index.
-                // 3. Otherwise: 0ms (instant reaction for clicks).
                 transitionDelay: isReturning
                   ? `${(deck.length - index) * SpreadConfig.discardStagger}ms`
                   : isInitialSpread

@@ -27,7 +27,6 @@ const PhaseNewReading: React.FC<PhaseNewReadingProps> = ({
 
   const handleFinish = () => {
     setIsReturning(true);
-    // Wait for the fly-back stagger to finish
     setTimeout(() => {
       onReset();
     }, 1500);

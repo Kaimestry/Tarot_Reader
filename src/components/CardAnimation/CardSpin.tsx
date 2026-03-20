@@ -18,7 +18,6 @@ export default function CardWheel() {
 
   const cardCount = Math.floor(circumference / cardWidth);
 
-  // repeat cards until we have enough
   const cards = Array.from(
     { length: cardCount },
     (_, i) => baseCards[i % baseCards.length],
