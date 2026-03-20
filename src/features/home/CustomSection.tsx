@@ -1,5 +1,5 @@
 import React from "react";
-import PlainButton from "../../components/buttons/plainButton";
+import PlainButton from "../../components/buttons/PlainButton";
 import { MdDraw } from "react-icons/md";
 
 const CustomSection = () => {

@@ -3,7 +3,7 @@ import ReadingLayout from "../../features/reading/ReadingLayout";
 import CardDeck from "../../components/CardAnimation/CardDeck";
 import CardSpread from "../../components/CardAnimation/CardSpread";
 import { Card } from "./ReadingScreen";
-import PlainButton from "../../components/buttons/plainButton";
+import PlainButton from "../../components/buttons/PlainButton";
 
 interface PhaseSpreadProps {
   deck: Card[];

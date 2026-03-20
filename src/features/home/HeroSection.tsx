@@ -1,5 +1,5 @@
 import React from "react";
-import PlainButton from "../../components/buttons/plainButton";
+import PlainButton from "../../components/buttons/PlainButton";
 import GradientBackground from "../../components/background/GradientBackground";
 import { GiCardRandom } from "react-icons/gi";
 import { MdDraw } from "react-icons/md";

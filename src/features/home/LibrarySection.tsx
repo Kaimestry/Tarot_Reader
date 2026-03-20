@@ -1,5 +1,5 @@
 import React from "react";
-import PlainButton from "../../components/buttons/plainButton";
+import PlainButton from "../../components/buttons/PlainButton";
 
 const LibrarySection = () => {
   return (

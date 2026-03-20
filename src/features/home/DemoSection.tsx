@@ -1,5 +1,5 @@
 import React from "react";
-import PlainButton from "../../components/buttons/plainButton";
+import PlainButton from "../../components/buttons/PlainButton";
 import { GiCardRandom } from "react-icons/gi";
 import { BRAND_CONFIG } from "../../config/appConfig";
 

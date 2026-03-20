@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import ReadingLayout from "../../features/reading/ReadingLayout";
 import CardDeck from "../../components/CardAnimation/CardDeck";
 import AnimatedShuffleDeck from "../../components/CardAnimation/AnimatedShuffleDeck";
-import PlainButton from "../../components/buttons/plainButton";
+import PlainButton from "../../components/buttons/PlainButton";
 // Updated path based on your folder structure
 
 const PhaseShuffle: React.FC<{ onNext: () => void }> = ({ onNext }) => {
