@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReadingLayout from "../../features/reading/ReadingLayout";
 import CardDeck from "../../components/CardAnimation/CardDeck";
 import CardSpread from "../../components/CardAnimation/CardSpread";
@@ -10,6 +10,8 @@ interface PhaseSpreadProps {
   selectedCards: Card[];
   setSelectedCards: (cards: Card[]) => void;
   onNext: () => void;
+  // NEW: Dynamic selection limit based on reading type
+  maxSelection: number;
 }
 
 const PhaseSpread: React.FC<PhaseSpreadProps> = ({
@@ -17,10 +19,26 @@ const PhaseSpread: React.FC<PhaseSpreadProps> = ({
   selectedCards,
   setSelectedCards,
   onNext,
+  maxSelection,
 }) => {
-  const maxSelection = 3;
+  const deckRef = useRef<HTMLDivElement>(null);
+  const [deckInfo, setDeckInfo] = useState({ x: 0, y: 0, width: 0 });
+  const [isDismissing, setIsDismissing] = useState(false);
+
+  // Capture deck position for the "Fly-out" and "Fly-back" math
+  useEffect(() => {
+    if (deckRef.current) {
+      const rect = deckRef.current.getBoundingClientRect();
+      setDeckInfo({
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+      });
+    }
+  }, []);
 
   const handleSelect = (card: Card) => {
+    if (isDismissing) return;
     const isAlreadySelected = selectedCards.find((c) => c.id === card.id);
 
     if (isAlreadySelected) {
@@ -30,18 +48,27 @@ const PhaseSpread: React.FC<PhaseSpreadProps> = ({
     }
   };
 
+  const handleConfirm = () => {
+    if (selectedCards.length === maxSelection) {
+      setIsDismissing(true);
+    }
+  };
+
   const isSelectionComplete = selectedCards.length === maxSelection;
+  const remainingCount = maxSelection - selectedCards.length;
 
   return (
     <ReadingLayout
-      phaseName="Select Your Cards"
+      phaseName={isDismissing ? "Preparing Revelation..." : "Select Your Cards"}
       phaseInstruction={
-        isSelectionComplete
-          ? "You have chosen your path. Confirm to reveal."
-          : `Focus on your intent and select ${maxSelection - selectedCards.length} more cards.`
+        isDismissing
+          ? "Clearing the board..."
+          : isSelectionComplete
+            ? "You have chosen your path. Confirm to reveal."
+            : `Focus on your intent and select ${remainingCount} more ${remainingCount === 1 ? "card" : "cards"}.`
       }
       leftTop={
-        <div className="w-16 sm:w-20 md:w-24">
+        <div ref={deckRef} className="w-16 sm:w-20">
           <CardDeck cardCount={5} />
         </div>
       }
@@ -50,18 +77,25 @@ const PhaseSpread: React.FC<PhaseSpreadProps> = ({
           deck={deck}
           selectedCards={selectedCards}
           onCardClick={handleSelect}
+          deckX={deckInfo.x}
+          deckY={deckInfo.y}
+          deckWidth={deckInfo.width}
+          isDismissing={isDismissing}
+          onDismissComplete={onNext}
         />
       }
       footerButtons={
         <PlainButton
           label={
-            isSelectionComplete
-              ? "Confirm Selection"
-              : `Selected ${selectedCards.length}/${maxSelection}`
+            isDismissing
+              ? "Loading..."
+              : isSelectionComplete
+                ? "Confirm Selection"
+                : `Selected ${selectedCards.length}/${maxSelection}`
           }
           variant="primary"
-          onClick={onNext}
-          // Button is only clickable when exactly 3 are picked
+          onClick={handleConfirm}
+          // disabled={!isSelectionComplete || isDismissing}
         />
       }
     />

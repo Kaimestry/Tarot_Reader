@@ -6,4 +6,10 @@ export const CardDeckConfig = {
   previewMaxWidth: 120, // max width for small deck preview
   previewMaxHeight: 220, // max height for small deck preview
   hoverFloat: 4, // px the top card floats on hover/click
+
+  rules: {
+    defaultMaxSelection: 3,
+    quickReadingMax: 1,
+    celticCrossMax: 10,
+  },
 };

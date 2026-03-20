@@ -39,11 +39,9 @@ const PhaseShuffle: React.FC<{ onNext: () => void }> = ({ onNext }) => {
             : "Focus on your question and start shuffling."
         }
         leftTop={
-          <div ref={deckRef} className="w-16 sm:w-16 md:w-20 lg:w-20">
-            {/* Reduced from w-32 to w-24 for laptop screens */}
-            <div style={{ visibility: animActive ? "hidden" : "visible" }}>
-              <CardDeck cardCount={5} />
-            </div>
+          <div ref={deckRef} className="w-16 sm:w-20">
+            {/* Use the same width here for both phases */}
+            <CardDeck cardCount={5} />
           </div>
         }
         mainContent={

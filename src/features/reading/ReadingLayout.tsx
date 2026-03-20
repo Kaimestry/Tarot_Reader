@@ -19,7 +19,7 @@ const ReadingLayout: React.FC<LayoutProps> = ({
   footerButtons,
 }) => {
   return (
-    <div className="text-main flex flex-col min-h-[85vh] px-5 box-border">
+    <div className="text-main flex flex-col min-h-[85vh] px-2 sm:px-5 box-border">
       {/* Top Row */}
       <div className="flex items-center mb-5 gap-4">
         {/* Left Top - Deck */}
@@ -44,10 +44,10 @@ const ReadingLayout: React.FC<LayoutProps> = ({
         </div>
       </div>
       {/* Main View */}
-      <div className="flex-1 mb-5 border-2 border-dashed border-primary rounded-lg min-h-[300px] flex items-center justify-center bg-main">
+      <div className="flex-1 mb-5 border-2 border-dashed border-primary rounded-lg min-h-[300px] flex items-center justify-center bg-main p-2">
+        {" "}
         {mainContent}
       </div>
-
       {/* Footer */}
       <div className="flex justify-center gap-5 flex-wrap">{footerButtons}</div>
     </div>
