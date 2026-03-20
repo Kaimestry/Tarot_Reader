@@ -104,3 +104,13 @@
 .animate-fadeOut {
   animation: fadeOut 0.5s ease 2.5s forwards; /* Fades out right before the shuffle ends */
 }
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}

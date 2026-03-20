@@ -41,7 +41,6 @@ const TarotReader: React.FC = () => {
     <div className="w-full min-h-screen bg-main text-main overflow-hidden">
       {/* Phase 1: Shuffle */}
       {phase === 1 && <PhaseShuffle onNext={nextPhase} />}
-
       {/* Phase 2: Spread & Selection */}
       {phase === 2 && (
         <PhaseSpread
@@ -52,7 +51,6 @@ const TarotReader: React.FC = () => {
           onNext={nextPhase}
         />
       )}
-
       {/* Phase 3: The Reading/Reveal */}
       {phase === 3 && (
         <PhaseReading
@@ -62,9 +60,10 @@ const TarotReader: React.FC = () => {
           onNext={nextPhase}
         />
       )}
-
       {/* Phase 4: Final Screen */}
-      {phase === 4 && <PhaseNewReading onReset={resetReading} />}
+      {phase === 4 && (
+        <PhaseNewReading onReset={resetReading} selectedCards={selectedCards} />
+      )}
     </div>
   );
 };

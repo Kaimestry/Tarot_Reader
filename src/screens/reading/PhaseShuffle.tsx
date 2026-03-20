@@ -3,7 +3,13 @@ import ReadingLayout from "../../features/reading/ReadingLayout";
 import CardDeck from "../../components/CardAnimation/CardDeck";
 import AnimatedShuffleDeck from "../../components/CardAnimation/AnimatedShuffleDeck";
 import PlainButton from "../../components/buttons/PlainButton";
-// Updated path based on your folder structure
+
+// --- SHUFFLE CONFIGURATION ---
+const ShuffleConfig = {
+  iterations: 5, // How many times the cards physically swap/move
+  speed: 400, // Duration (ms) of each shuffle movement
+  deckYOffset: -9, // Fine-tune the vertical alignment of the animated deck
+};
 
 const PhaseShuffle: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const deckRef = useRef<HTMLDivElement>(null);
@@ -40,14 +46,13 @@ const PhaseShuffle: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         }
         leftTop={
           <div ref={deckRef} className="w-16 sm:w-20">
-            {/* Use the same width here for both phases */}
             <CardDeck cardCount={5} />
           </div>
         }
         mainContent={
           <div className="flex flex-col items-center justify-center p-10 text-center">
             {animActive ? (
-              <p className="text-xl italic animate-pulse">
+              <p className="text-xl italic animate-pulse text-primary">
                 Clearing the cards...
               </p>
             ) : (
@@ -64,14 +69,12 @@ const PhaseShuffle: React.FC<{ onNext: () => void }> = ({ onNext }) => {
             {animActive ? (
               <PlainButton label="Shuffling..." variant="primary" />
             ) : !hasShuffled ? (
-              /* Phase 1: Initial Start */
               <PlainButton
                 label="Start Shuffling"
                 variant="primary"
                 onClick={startShuffle}
               />
             ) : (
-              /* Phase 2: Post-Shuffle Options */
               <>
                 <PlainButton
                   label="Next Phase"
@@ -92,9 +95,11 @@ const PhaseShuffle: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {animActive && (
         <AnimatedShuffleDeck
           startX={deckRect.x}
-          startY={deckRect.y - 9}
+          startY={deckRect.y + ShuffleConfig.deckYOffset}
           startWidth={deckRect.width}
-          shuffleTimes={3}
+          shuffleTimes={ShuffleConfig.iterations}
+          // Assuming your AnimatedShuffleDeck accepts a speed/duration prop:
+          speed={ShuffleConfig.speed}
           onComplete={handleShuffleComplete}
         />
       )}
