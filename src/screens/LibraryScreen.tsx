@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Card, generateRandomDeck } from "../utils/tarotDeck";
-import FilterBar from "../components/FilterBar";
-import SearchBar from "../components/SearchBar";
+import { Card, FULL_STABLE_DECK, generateRandomDeck } from "../utils/tarotDeck";
 import TarotCard from "../components/TarotCard";
 import LibraryLayout from "../features/library/LibraryLayout";
-import Pagination from "../components/Pagination";
 import { LibraryConfig } from "../config/CardDeckConfig";
+import SearchBar from "../components/inputs/SearchBar";
+import FilterBar from "../components/inputs/FilterBar";
+import Pagination from "../components/inputs/Pagination";
 
 // 1. Weighting Logic for Minors
 const getCardWeight = (name: string): number => {
@@ -33,7 +33,7 @@ const CATEGORIES = [
 ];
 
 const LibraryScreen: React.FC = () => {
-  const [fullDeck] = useState<Card[]>(() => generateRandomDeck(78));
+  const [fullDeck] = useState<Card[]>(FULL_STABLE_DECK);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
@@ -116,7 +116,7 @@ const LibraryScreen: React.FC = () => {
     <LibraryLayout
       headerContent={
         <div className="w-full flex flex-col items-center gap-6">
-          <h1 className="text-5xl font-black italic uppercase tracking-tighter text-main">
+          <h1 className="text-5xl font-black uppercase tracking-tighter text-main">
             The Library
           </h1>
           <SearchBar className="max-w-md" onChange={setSearchTerm} />
@@ -132,7 +132,7 @@ const LibraryScreen: React.FC = () => {
         />
 
         <div className="w-full flex flex-col items-center">
-          <div className="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto min-h-[40vh] py-8">
+          <div className="flex flex-wrap justify-center gap-10 max-w-6xl min-h-[40vh]">
             {paginatedCards.length > 0 ? (
               paginatedCards.map((card) => (
                 <TarotCard

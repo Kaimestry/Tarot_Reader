@@ -1,5 +1,5 @@
 import React from "react";
-import { TarotSuite } from "../features/library/types";
+import { TarotSuite } from "../../features/library/types";
 interface Category {
   label: string;
   key: string;

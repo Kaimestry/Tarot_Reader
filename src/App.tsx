@@ -5,6 +5,7 @@ import LibraryScreen from "./screens/LibraryScreen";
 import NavBar from "./features/navigations/NavBar";
 import Footer from "./features/navigations/Footer";
 import ReadingScreen from "./screens/reading/ReadingScreen";
+import CardDetailScreen from "./screens/CardDetailScreen";
 
 const NotFound = () => <h2>404: This path isn't programmed.</h2>;
 
@@ -18,6 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/library" element={<LibraryScreen />} />
+          <Route path="/library/:slug" element={<CardDetailScreen />} />
           <Route path="/reading" element={<ReadingScreen />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

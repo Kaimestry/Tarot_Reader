@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "../utils/tarotDeck";
 import { CardDeckConfig } from "../config/CardDeckConfig";
+import { useNavigate } from "react-router-dom";
 
 interface TarotCardProps extends Card {
   scale: number;
@@ -12,22 +13,25 @@ const TarotCard: React.FC<TarotCardProps> = ({
   isReversed,
   scale,
 }) => {
-  // Use the exact dimensions from your CardDeckConfig
+  const navigate = useNavigate();
   const width = CardDeckConfig.originalWidth * scale;
   const height = CardDeckConfig.originalHeight * scale;
 
+  const cardSlug = name.toLowerCase().replace(/ /g, "-");
+
   return (
     <div
-      className="group relative transition-transform duration-300 ease-out"
+      onClick={() => navigate(`/library/${cardSlug}`)} // Navigate on click
+      className="group relative cursor-pointer transition-transform duration-300 ease-out"
       style={
         {
           width: `${width}px`,
           height: `${height}px`,
-          // TypeScript safe way to pass your custom hover float
           "--hover-float": `${CardDeckConfig.hoverFloat}px`,
         } as React.CSSProperties
       }
     >
+      {" "}
       <div
         className="relative w-full h-full overflow-hidden border border-divider bg-surface 
                    transition-all duration-300 shadow-sm

@@ -5,6 +5,7 @@ export type Card = {
   name: string;
   image: string;
   isReversed: boolean;
+  slug?: string; // Add this as optional so it doesn't break generateRandomDeck
 };
 
 const MAJOR_ARCANA = [
@@ -53,7 +54,7 @@ const MINOR_ARCANA = ["Cups", "Swords", "Wands", "Pentacles"].flatMap((suit) =>
   }),
 );
 
-const CARD_DATA = [...MAJOR_ARCANA, ...MINOR_ARCANA];
+export const CARD_DATA = [...MAJOR_ARCANA, ...MINOR_ARCANA];
 
 export const generateRandomDeck = (size: number): Card[] => {
   return [...CARD_DATA]
@@ -66,3 +67,11 @@ export const generateRandomDeck = (size: number): Card[] => {
       isReversed: Math.random() > 0.7,
     }));
 };
+
+export const FULL_STABLE_DECK: Card[] = CARD_DATA.map((card) => ({
+  id: card.file, // Stable ID based on filename
+  slug: card.name.toLowerCase().replace(/ /g, "-"),
+  name: card.name,
+  image: `/assets/Cards-png/${card.file}`,
+  isReversed: false, // Library cards usually show upright by default
+}));
